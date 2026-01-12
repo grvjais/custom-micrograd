@@ -64,6 +64,7 @@ class AutoDiffNode:
         build_order(self)
 
         # applying chain rule
+        self.grad = 1
         for n in reversed(order):
             n._backward()
 
