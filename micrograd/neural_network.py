@@ -1,5 +1,5 @@
 import random
-from engine import AutoDiffNode
+from micrograd.engine import AutoDiffNode
 
 class Module:
     
