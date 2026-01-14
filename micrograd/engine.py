@@ -1,3 +1,4 @@
+import math
 class AutoDiffNode:
 
     def __init__(self, data, _children=(), _op=''):
@@ -40,13 +41,34 @@ class AutoDiffNode:
 
         return node  
     
+    def exp(self):
+        node = AutoDiffNode(math.exp(self.data), (self,), 'exp')
+
+        def _backward():
+            self.grad += node.data * node.grad
+        
+        node._backward = _backward
+
+        return node
+    
+    def log(self):
+        if self.data <= 0:
+            raise ValueError("log undefined for non-positive values")
+
+        node = AutoDiffNode(math.log(self.data), (self,), 'log')
+
+        def _backward():
+            self.grad += (self.data ** -1)  * node.grad
+        node._backward = _backward
+        
+        return node
+    
     def relu(self):
         node = AutoDiffNode(0 if self.data < 0 else self.data, (self,), 'ReLU')
 
         def _backward():
             self.grad += (node.data > 0) * node.grad
-
-        node._backward = _backward
+            node._backward = _backward
 
         return node
     
