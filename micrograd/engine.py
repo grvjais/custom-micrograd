@@ -1,14 +1,14 @@
 import math
 class AutoDiffNode:
 
-    def __init__(self, data, _children=(), _op=''):
+    def __init__(self, data, _children=(), _op='', label=''):
         self.data = data
         self.grad = 0.0
         # variables for internal use 
         self._backward = lambda: None     
         self._prev = set(_children)
         self._op = _op
-
+        self.label = label
     def __add__(self, other):
         other = other if isinstance(other, AutoDiffNode) else AutoDiffNode(other)
         node = AutoDiffNode(self.data + other.data, (self, other), '+')
@@ -68,7 +68,7 @@ class AutoDiffNode:
 
         def _backward():
             self.grad += (node.data > 0) * node.grad
-            node._backward = _backward
+        node._backward = _backward
 
         return node
     
