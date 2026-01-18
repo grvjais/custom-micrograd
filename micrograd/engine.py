@@ -72,6 +72,47 @@ class AutoDiffNode:
 
         return node
     
+    def tanh(self):
+        x = self.data
+        t = (math.exp(2*x) - 1) / (math.exp(2*x) + 1)
+        node = AutoDiffNode(t, (self,), 'tanh')
+
+        def _backward():
+            self.grad += (1 - t**2) * node.grad
+        node._backward = _backward
+
+        return node
+    
+    def sigmoid(self):
+        s = 1 / (1 + math.exp(-(self.data)))
+        node = AutoDiffNode(s, (self,), 'sigmoid')
+
+        def _backward():
+            self.grad += s * (1-s) * node.grad
+        node._backward = _backward
+
+        return node
+    
+    def leaky_relu(self, alpha=0.01):
+        node = AutoDiffNode(alpha * self.data if self.data < 0 else self.data)
+
+        def _backward():
+            self.grad += (alpha if self.data < 0 else 1) * node.grad
+        node._backward = _backward
+
+        return node
+    
+    def linear(self):
+        node = AutoDiffNode(self.data, (self,), 'linear')
+
+        def _backward():
+            self.grad += node.grad
+        node._backward = _backward
+
+        return node
+
+
+
     def backward(self):
 
         order = []
