@@ -94,7 +94,7 @@ class AutoDiffNode:
         return node
     
     def leaky_relu(self, alpha=0.01):
-        node = AutoDiffNode(alpha * self.data if self.data < 0 else self.data)
+        node = AutoDiffNode(alpha * self.data if self.data < 0 else self.data, (self,), 'leaky_relu')
 
         def _backward():
             self.grad += (alpha if self.data < 0 else 1) * node.grad
