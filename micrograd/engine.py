@@ -9,6 +9,7 @@ class AutoDiffNode:
         self._prev = set(_children)
         self._op = _op
         self.label = label
+        
     def __add__(self, other):
         other = other if isinstance(other, AutoDiffNode) else AutoDiffNode(other)
         node = AutoDiffNode(self.data + other.data, (self, other), '+')
