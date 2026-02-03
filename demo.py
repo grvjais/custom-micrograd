@@ -63,7 +63,8 @@ with tab1:
             )
         # User input expression
         expr = st.text_input("Expression", value=f"(a * b + c).{activation}()")
-        st.caption("Supported: +, *, .tanh(), .exp(), .sigmoid(), etc.")
+        st.caption("Supported: +, -, /, *, **, .log(), .exp()")
+        st.caption("Example: (a**2 + c / b).log().relu()")
 
     with col2:
         try:
