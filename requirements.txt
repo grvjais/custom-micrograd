@@ -1,2 +1,4 @@
 graphviz
 streamlit
+numpy
+matplotlib
