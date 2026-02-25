@@ -7,7 +7,7 @@ from micrograd.engine import AutoDiffNode
 from micrograd.neural_network import MLP
 
 # ==========================================
-# PART 2: GRAPHVIZ HELPER
+# PART 1: GRAPHVIZ HELPER
 # ==========================================
 
 def draw_dot(root):
@@ -37,7 +37,7 @@ def draw_dot(root):
     return dot
 
 # ==========================================
-# PART 3: STREAMLIT APP
+# PART 2: STREAMLIT APP
 # ==========================================
 
 st.set_page_config(layout="wide", page_title="Micrograd Playground")
@@ -142,11 +142,35 @@ with tab2:
 
             elif problem == "Two Moons":
                 X, y = [], []
-                for t in np.linspace(0, np.pi, 50):
-                    X.append([np.cos(t), np.sin(t)])
+                n = 200
+                noise = 0.1
+                radius = 1.0
+                vertical_shift = 0.5
+
+                for _ in range(n // 2):
+                    t = np.random.uniform(0, np.pi)
+
+                    # First moon (upper)
+                    x1 = radius * np.cos(t)
+                    x2 = radius * np.sin(t)
+                    X.append([x1, x2])
                     y.append(1)
-                    X.append([1 - np.cos(t), 1 - np.sin(t)])
+
+                    # Second moon (lower shifted)
+                    x1 = radius * np.cos(t) + radius
+                    x2 = -radius * np.sin(t) - vertical_shift
+                    X.append([x1, x2])
                     y.append(-1)
+
+                X = np.array(X)
+
+                # Add Gaussian noise
+                X += np.random.normal(scale=noise, size=X.shape)
+
+                # Center dataset 
+                X -= X.mean(axis=0)
+
+                X = X.tolist()
 
             return X, y
 
