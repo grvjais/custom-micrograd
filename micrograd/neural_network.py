@@ -30,9 +30,6 @@ class Neuron(Module):
         elif self.act_fn == 'sigmoid':
             return act.sigmoid()
         
-        elif self.act_fn == 'linear':
-            return act
-        
         elif self.act_fn == 'leaky_relu':
             return act.leaky_relu()
         

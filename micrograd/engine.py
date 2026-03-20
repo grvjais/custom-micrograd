@@ -102,15 +102,6 @@ class AutoDiffNode:
         node._backward = _backward
 
         return node
-    
-    def linear(self):
-        node = AutoDiffNode(self.data, (self,), 'linear')
-
-        def _backward():
-            self.grad += node.grad
-        node._backward = _backward
-
-        return node
 
 
 
