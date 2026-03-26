@@ -59,7 +59,7 @@ with tab1:
         c_val = st.slider("Value for c", -5.0, 5.0, 10.0)
         activation = st.selectbox(
             "Select Activation Function:",
-            ["relu", "tanh", "sigmoid","leaky_relu"]
+            ["relu", "tanh", "sigmoid", "linear","leaky_relu"]
             )
         # User input expression
         expr = st.text_input("Expression", value=f"(a * b + c).{activation}()")
@@ -115,7 +115,7 @@ with tab2:
         n_layer = st.slider("Hidden layers", 1, 3, 1)
         act = st.selectbox(
             "Activation Function:",
-            ["relu", "tanh", "sigmoid","leaky_relu"]
+            ["relu", "tanh", "sigmoid", "linear","leaky_relu"]
             )
         
         def get_dataset(problem):
